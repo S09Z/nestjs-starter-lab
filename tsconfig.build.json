@@ -1,4 +1,15 @@
 {
   "extends": "./tsconfig.json",
-  "exclude": ["node_modules", "test", "dist", "**/*spec.ts"]
+  "compilerOptions": {
+    "sourceMap": false,  // Disable source maps in production
+    "declaration": true, // Generate declaration files (.d.ts) for the project
+    "removeComments": true, // Remove comments from output files
+    "noEmitHelpers": true,  // Remove helper functions and use external helpers instead
+    "downlevelIteration": true // Emit more correct, but possibly slower, JavaScript for iteration
+  },
+  "exclude": [
+    "node_modules",
+    "test",
+    "**/*spec.ts"
+  ]
 }
