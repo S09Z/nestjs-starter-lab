@@ -18,7 +18,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "prisma:generate": "node  prisma generate",
+    "prisma:generate": "yarn pnpify prisma generate --schema=./prisma/schema.prisma",
     "prisma:migrate:dev": "node  prisma migrate dev",
     "prisma:migrate:prod": "node  prisma migrate deploy",
     "prisma:migrate:reset": "node  prisma migrate reset --force",
