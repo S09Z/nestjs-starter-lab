@@ -17,7 +17,14 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "prisma:generate": "node  prisma generate",
+    "prisma:migrate:dev": "node  prisma migrate dev",
+    "prisma:migrate:prod": "node  prisma migrate deploy",
+    "prisma:migrate:reset": "node  prisma migrate reset --force",
+    "prisma:db:pull": "node  prisma db pull",
+    "prisma:db:push": "node  prisma db push",
+    "prisma:studio": "node  prisma studio"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.10",
@@ -28,7 +35,8 @@
     "@nestjs/platform-express": "^10.0.0",
     "@prisma/client": "^5.18.0",
     "reflect-metadata": "^0.2.0",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "schemix": "^1.15.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
@@ -41,6 +49,7 @@
     "@types/supertest": "^6.0.0",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
+    "@yarnpkg/pnpify": "^4.1.1",
     "eslint": "^8.42.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
@@ -50,7 +59,7 @@
     "supertest": "^7.0.0",
     "ts-jest": "^29.1.0",
     "ts-loader": "^9.4.3",
-    "ts-node": "^10.9.1",
+    "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "tslib": "^2.6.3",
     "typescript": "^5.5.4"
