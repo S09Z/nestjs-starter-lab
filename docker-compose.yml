@@ -1,16 +1,50 @@
 version: '3.8'
 
 services:
-  app:
-    image: your-dockerhub-username/your-app-name:latest
+  # app:
+  #   image: your-dockerhub-username/your-app-name:latest
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     NODE_ENV: production
+  #     DATABASE_URL: ${DATABASE_URL}
+  #   restart: always
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+  #     interval: 1m30s
+  #     timeout: 10s
+  #     retries: 3
+
+  sonarqube:
+    image: sonarqube:community
     ports:
-      - "3000:3000"
+      - 9000:9000
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
     environment:
-      NODE_ENV: production
-      DATABASE_URL: ${DATABASE_URL}
-    restart: always
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
-      interval: 1m30s
-      timeout: 10s
-      retries: 3
+      - SONAR_JDBC_URL=jdbc:postgresql://postgresql:5432/sonarqube
+      - SONAR_JDBC_USERNAME=sonarqube
+      - SONAR_JDBC_PASSWORD=sonarqube
+    networks:
+      - sonarqube-network
+
+  postgresql:
+    image: postgres:14
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=sonarqube
+      - POSTGRES_PASSWORD=sonarqube
+      # - POSTGRES_DB=sonarqube
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+    networks:
+      - sonarqube-network
+
+volumes:
+  sonarqube_data:
+  postgresql_data:
+
+networks:
+  sonarqube-network:
+    external: true
