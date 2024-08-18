@@ -1,7 +1,8 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UsersService } from '../../users/services/users.service';
-import { User } from '@/common/interfaces/user.interface';
+import { UsersService } from '../users/users.service';
+import { LoginDto } from './dto/login.dto';
+import { TokenDto } from './dto/token.dto';
 
 @Injectable()
 export class AuthService {
@@ -10,19 +11,47 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async validateOAuthLogin(user: User): Promise<string> {
-    const foundUser = await this.usersService.findOrCreate(user);
-    if (!foundUser) {
-      throw new UnauthorizedException();
+  async validateUser(email: string, password: string): Promise<any> {
+    const user = await this.usersService.findByEmail(email);
+    if (user && user.password === password) { // Replace with hash comparison in production
+      const { password, ...result } = user;
+      return result;
     }
-    const payload = { email: foundUser.email, sub: foundUser.id };
-    return this.jwtService.sign(payload);
+    return null;
   }
 
-  async login(user: User): Promise<any> {
+  async login(loginDto: LoginDto): Promise<TokenDto> {
+    const user = await this.validateUser(loginDto.email, loginDto.password);
+    if (!user) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
     const payload = { email: user.email, sub: user.id };
+    const accessToken = this.jwtService.sign(payload);
+    const refreshToken = this.jwtService.sign(payload, { expiresIn: '7d' });
+
+    // Here you might want to save the refreshToken in the database
+
     return {
-      access_token: this.jwtService.sign(payload),
+      accessToken,
+      refreshToken,
     };
+  }
+
+  async refresh(refreshToken: string): Promise<TokenDto> {
+    try {
+      const decoded = this.jwtService.verify(refreshToken);
+
+      const payload = { email: decoded.email, sub: decoded.sub };
+      const newAccessToken = this.jwtService.sign(payload);
+      const newRefreshToken = this.jwtService.sign(payload, { expiresIn: '7d' });
+
+      return {
+        accessToken: newAccessToken,
+        refreshToken: newRefreshToken,
+      };
+    } catch (e) {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
   }
 }

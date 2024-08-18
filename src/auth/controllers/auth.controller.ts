@@ -1,21 +1,22 @@
-import { Controller, Get, UseGuards, Req } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import { AuthService } from '@/auth/services/auth.service';
+import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { LoginDto } from './dto/login.dto';
+import { TokenDto } from './dto/token.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Get('google')
-  @UseGuards(AuthGuard('google'))
-  async googleAuth(@Req() req) {
-    // Initiates Google OAuth2 login
+  @Post('login')
+  async login(@Body() loginDto: LoginDto): Promise<TokenDto> {
+    return this.authService.login(loginDto);
   }
 
-  @Get('google/callback')
-  @UseGuards(AuthGuard('google'))
-  async googleAuthRedirect(@Req() req) {
-    // Handles the Google OAuth2 callback
-    return this.authService.login(req.user);
+  @Post('refresh')
+  async refresh(@Body('refreshToken') refreshToken: string): Promise<TokenDto> {
+    if (!refreshToken) {
+      throw new UnauthorizedException('Refresh token is required');
+    }
+    return this.authService.refresh(refreshToken);
   }
 }

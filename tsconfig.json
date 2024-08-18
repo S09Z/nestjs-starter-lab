@@ -10,7 +10,7 @@
     "moduleResolution": "node",
     "baseUrl": ".",  // Set the base URL to the root of your project
     "paths": {
-      "@/*": ["src/*"],  // This defines the '@' alias
+      "@@/*": ["src/*"],  // This defines the '@' alias
       "@/prisma/*": ["prisma/*"],
       "@/dist/*": ["dist/*"]
     },

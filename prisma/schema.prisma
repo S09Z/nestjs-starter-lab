@@ -5,13 +5,23 @@ datasource database {
 
 generator client {
   provider = "prisma-client-js"
-  interface = "asyncio"
   output   = "client"
 }
 
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
-  friends         User[] @relation(name: "friends")
-  friendsRelation User[] @relation(name: "friends")
+  name      String
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Book {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  author      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
