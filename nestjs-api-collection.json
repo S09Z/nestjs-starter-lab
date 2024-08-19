@@ -1,0 +1,200 @@
+{
+  "info": {
+    "name": "NestJS API Collection",
+    "description": "Postman collection for testing NestJS API endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Hello",
+      "item": [
+        {
+          "name": "Get Hello World",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{LOCAL}}/hello",
+              "host": ["{{LOCAL}}"],
+              "path": ["hello"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{LOCAL}}/users",
+              "host": ["{{LOCAL}}"],
+              "path": ["users"]
+            }
+          }
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{LOCAL}}/users/1",
+              "host": ["{{LOCAL}}"],
+              "path": ["users", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Books",
+      "item": [
+        {
+          "name": "Get All Books",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{LOCAL}}/books",
+              "host": ["{{LOCAL}}"],
+              "path": ["books"]
+            }
+          }
+        },
+        {
+          "name": "Get Book by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{LOCAL}}/books/1",
+              "host": ["{{LOCAL}}"],
+              "path": ["books", "1"]
+            }
+          }
+        },
+        {
+          "name": "Create a Book",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Brave New World\",\n    \"author\": \"Aldous Huxley\",\n    \"description\": \"Dystopian science fiction novel\"\n}"
+            },
+            "url": {
+              "raw": "{{LOCAL}}/books",
+              "host": ["{{LOCAL}}"],
+              "path": ["books"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reviews",
+      "item": [
+        {
+          "name": "Get All Reviews",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{LOCAL}}/reviews",
+              "host": ["{{LOCAL}}"],
+              "path": ["reviews"]
+            }
+          }
+        },
+        {
+          "name": "Get Review by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{LOCAL}}/reviews/1",
+              "host": ["{{LOCAL}}"],
+              "path": ["reviews", "1"]
+            }
+          }
+        },
+        {
+          "name": "Get Reviews by Book ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{LOCAL}}/reviews/book/1",
+              "host": ["{{LOCAL}}"],
+              "path": ["reviews", "book", "1"]
+            }
+          }
+        },
+        {
+          "name": "Create a Review",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"bookId\": 2,\n    \"reviewer\": \"Alice\",\n    \"content\": \"A must-read!\",\n    \"rating\": 5\n}"
+            },
+            "url": {
+              "raw": "{{LOCAL}}/reviews",
+              "host": ["{{LOCAL}}"],
+              "path": ["reviews"]
+            }
+          }
+        },
+        {
+          "name": "Update a Review",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"content\": \"An absolute masterpiece!\",\n    \"rating\": 5\n}"
+            },
+            "url": {
+              "raw": "{{LOCAL}}/reviews/3",
+              "host": ["{{LOCAL}}"],
+              "path": ["reviews", "3"]
+            }
+          }
+        },
+        {
+          "name": "Delete a Review",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{LOCAL}}/reviews/3",
+              "host": ["{{LOCAL}}"],
+              "path": ["reviews", "3"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
